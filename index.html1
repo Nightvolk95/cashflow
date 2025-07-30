@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>CashFlow Premium</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; padding: 0; }
+    h1 { text-align: center; font-size: 28px; margin: 20px 0; }
+    .container { max-width: 400px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    label { font-size: 18px; display: block; margin-top: 10px; }
+    input, select, button { width: 100%; padding: 10px; font-size: 18px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background: #4CAF50; color: white; cursor: pointer; margin-top: 15px; }
+    button:hover { background: #45a049; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 16px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<h1>CashFlow Premium</h1>
+<div class="container">
+    <label>Тип операции:</label>
+    <select id="type">
+        <option value="Доход">Доход</option>
+        <option value="Расход">Расход</option>
+    </select>
+
+    <label>Сумма:</label>
+    <input type="number" id="amount" placeholder="Введите сумму">
+
+    <label>Валюта:</label>
+    <select id="currency">
+        <option value="USD">Доллар</option>
+        <option value="EUR">Евро</option>
+        <option value="RUB">Рубль</option>
+        <option value="UAH">Гривна</option>
+    </select>
+
+    <label>Категория:</label>
+    <input type="text" id="category" placeholder="Например: продукты">
+
+    <button onclick="addRecord()">Добавить</button>
+
+    <table id="recordsTable">
+        <thead>
+            <tr>
+                <th>Тип</th>
+                <th>Сумма</th>
+                <th>Валюта</th>
+                <th>Категория</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+let records = [];
+
+function addRecord() {
+    let type = document.getElementById('type').value;
+    let amount = document.getElementById('amount').value;
+    let currency = document.getElementById('currency').value;
+    let category = document.getElementById('category').value;
+
+    if (!amount || !category) {
+        alert("Введите сумму и категорию");
+        return;
+    }
+
+    records.push({ type, amount, currency, category });
+    updateTable();
+    document.getElementById('amount').value = '';
+    document.getElementById('category').value = '';
+}
+
+function updateTable() {
+    let tbody = document.querySelector('#recordsTable tbody');
+    tbody.innerHTML = '';
+    records.forEach(r => {
+        let row = `<tr>
+            <td>${r.type}</td>
+            <td>${r.amount}</td>
+            <td>${r.currency}</td>
+            <td>${r.category}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+}
+</script>
+
+</body>
+</html>
